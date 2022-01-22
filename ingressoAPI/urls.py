@@ -12,5 +12,4 @@ router.register('filmes', views.FilmeViewSet, basename='Filmes')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
-    path('atualiza', views.atualiza_banco)
 ]
