@@ -1,5 +1,7 @@
+import asyncio
 import requests
 from bs4 import BeautifulSoup
+from pyppeteer import launch 
 
 
 def filmes_em_alta() -> list:
@@ -12,6 +14,47 @@ def filmes_em_alta() -> list:
     filmes = carrosel.find_all('article')
 
     for filme in filmes:
+        filmes_em_alta.append(filme.get_text().strip())
+
+    return filmes_em_alta
+
+def filmes_em_cartaz() -> list:
+    filmes_em_cartaz= []
+
+    page = requests.get('https://www.ingresso.com/home?city=sao-paulo&partnership=home')
+    soup = BeautifulSoup(page.text, 'html.parser')
+
+    carrosel = soup.find(class_='em-cartaz carousel-box')
+    filmes = carrosel.find_all('article')
+
+    for filme in filmes:
+        filmes_em_cartaz.append(filme.get_text().strip())
+
+    return filmes_em_cartaz
+
+async def get_filmes():
+    browser = await launch(
+    handleSIGINT=False,
+    handleSIGTERM=False,
+    handleSIGHUP=False,
+    )
+    page = await browser.newPage()
+    await page.goto('https://www.ingresso.com/filmes?city=sao-paulo&partnership=home', {'waitUntil' : 'networkidle2'})
+    page_content = await page.content() 
+
+    await browser.close()
+
+    return page_content
+
+def filmes() -> list:
+    todos_filmes = []
+
+    page = asyncio.run(get_filmes())
+    soup = BeautifulSoup(page, 'html.parser')
+
+    filmes = soup.find_all(class_='card ing-small')
+
+    for filme in filmes:
         caracteristicas = {}
 
         caracteristicas['titulo'] = filme.get_text().strip()
@@ -19,5 +62,6 @@ def filmes_em_alta() -> list:
         img = filme.find('img')
         caracteristicas['img'] =  img['src'].strip()
 
-        filmes_em_alta.append(caracteristicas.copy())
-    return filmes_em_alta
+        todos_filmes.append(caracteristicas.copy())
+
+    return todos_filmes
