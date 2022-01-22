@@ -1,1 +1,1 @@
-web: gunicorn ingressoAPI.wsgi --timeout 600
+web: gunicorn ingressoAPI.wsgi
