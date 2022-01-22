@@ -39,6 +39,7 @@ async def get_filmes():
     handleSIGHUP=False,
     headless=True,
     args=['--no-sandbox'],
+
     )
     page = await browser.newPage()
     await page.goto('https://www.ingresso.com/filmes?city=sao-paulo&partnership=home', {'waitUntil' : 'networkidle2'})
