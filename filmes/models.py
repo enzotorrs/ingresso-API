@@ -5,3 +5,4 @@ class Filme(models.Model):
     imagem_font = models.TextField()
     em_alta = models.BooleanField()
     em_cartaz = models.BooleanField()
+    principal = models.BooleanField()

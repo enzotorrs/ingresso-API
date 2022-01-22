@@ -68,3 +68,22 @@ def filmes() -> list:
         todos_filmes.append(caracteristicas.copy())
 
     return todos_filmes
+
+def filme_principal() -> dict:
+    filme = {}
+
+    page = requests.get('https://www.ingresso.com/home?city=sao-paulo&partnership=home')
+    soup = BeautifulSoup(page.text, 'html.parser')
+
+    banner = soup.find_all(class_='main-home-banner')[1]
+    
+    titulo = banner.get_text().strip()
+
+    titulo = titulo.split('\n')
+    filme['titulo'] = titulo[0] 
+
+    picture = banner.find('picture')
+    source = picture.find('source')
+    filme['img'] = source['srcset']
+
+    return filme
