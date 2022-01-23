@@ -4,8 +4,8 @@ from filmes import scraping, models
 
 class Command(BaseCommand):
     help = 'faz scraping do site e atualiza os filmes no banco'
-
-    def handle(self, *args, **kwargs):
+    
+    def atualiza_filmes(self):
         filmes = scraping.filmes()
         filmes_em_alta = scraping.filmes_em_alta()
         filmes_em_cartaz = scraping.filmes_em_cartaz()
@@ -39,3 +39,23 @@ class Command(BaseCommand):
             novo_filme.save()
 
         self.stdout.write('banco atualizado')
+
+
+    def atualiza_noticias(self):
+        noticias = scraping.noticias()
+
+        models.Noticia.objects.all().delete()
+
+        for noticia in noticias:
+            nova_noticia = models.Noticia(
+                titulo=noticia['titulo'],
+                descricao=noticia['descricao'],
+                imagem=noticia['img'],
+            )
+            nova_noticia.save()
+        self.stdout.write('noticias atualizadas')
+
+
+    def handle(self, *args, **kwargs):
+        self.atualiza_filmes()
+        self.atualiza_noticias()
