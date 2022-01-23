@@ -7,3 +7,9 @@ class Filme(models.Model):
     em_cartaz = models.BooleanField()
     principal = models.BooleanField()
     principal_imagem_font = models.TextField(null=True)
+
+
+class Noticia(models.Model):
+    titulo = models.CharField(max_length=255)
+    descricao = models.TextField()
+    imagem = models.TextField()
