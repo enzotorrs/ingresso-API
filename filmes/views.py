@@ -21,3 +21,7 @@ class FilmeCartazViewSet(viewsets.ModelViewSet):
 class FilmePrincipalViewSet(viewsets.ModelViewSet):
     queryset = models.Filme.objects.filter(principal=True)
     serializer_class = serializer.FilmeSerializer
+
+class NoticiaViewSet(viewsets.ModelViewSet):
+    queryset = models.Noticia.objects.all()
+    serializer_class = serializer.NoticiaSerializer
