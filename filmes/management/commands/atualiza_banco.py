@@ -15,16 +15,18 @@ class Command(BaseCommand):
 
         for filme in filmes:
             titulo = filme['titulo']
+            imagem = filme['img']
 
             if '\n' in titulo:
                 continue
 
             if titulo == filme_principal['titulo']:
-                imagem = filme_principal['img']
+                imagem_principal = filme_principal['img']
                 principal = True
+
             else:
-                imagem = filme['img']
                 principal = False
+                imagem_principal = None
 
             novo_filme = models.Filme(
                 nome_filme=titulo,
@@ -32,6 +34,7 @@ class Command(BaseCommand):
                 em_alta=titulo in filmes_em_alta,
                 em_cartaz=titulo in filmes_em_cartaz,
                 principal=principal,
+                principal_imagem_font= imagem_principal,
             )
             novo_filme.save()
 
