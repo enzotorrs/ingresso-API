@@ -87,3 +87,25 @@ def filme_principal() -> dict:
     filme['img'] = source['srcset']
 
     return filme
+
+def noticias() -> list:
+    noticias = []
+
+    page = requests.get('https://www.ingresso.com/home?city=sao-paulo&partnership=home')
+    soup = BeautifulSoup(page.text, 'html.parser')
+
+    noticias_html = soup.find_all(class_='news-h-article')
+
+    for noticia in noticias_html:
+        caracteristicas = {}
+
+        img = noticia.find('img')
+
+        caracteristicas['img'] = img['src']
+
+        caracteristicas['titulo'] = noticia.find('h2').get_text()
+        caracteristicas['descricao'] = noticia.find('p').get_text()
+
+        noticias.append(caracteristicas.copy())
+
+    return noticias
