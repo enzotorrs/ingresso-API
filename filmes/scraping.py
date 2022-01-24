@@ -2,6 +2,7 @@ import asyncio
 import requests
 from bs4 import BeautifulSoup
 from pyppeteer import launch 
+from time import sleep
 
 
 def filmes_em_alta() -> list:
@@ -109,3 +110,54 @@ def noticias() -> list:
         noticias.append(caracteristicas.copy())
 
     return noticias
+
+async def get_filmes_em_breve():
+    browser = await launch(
+    handleSIGINT=False,
+    handleSIGTERM=False,
+    handleSIGHUP=False,
+    headless=True,
+    args=['--no-sandbox'],
+    )
+
+    page = await browser.newPage()
+    await page.goto('https://www.ingresso.com/filmes?city=sao-paulo&partnership=home', {'waitUntil' : 'networkidle2'})
+
+    await page.click('[id="tab-coming-soon"]')
+    await page.waitForSelector('#coming-soon .movie-list-small li:nth-child(50)')
+    
+    page_content = await page.content() 
+
+    await browser.close()
+
+    return page_content
+
+def filme_breve() -> list:
+    filmes_em_breve = []
+
+    page = asyncio.run(get_filmes_em_breve())
+    soup = BeautifulSoup(page, 'html.parser')
+
+    filmes = soup.find_all(class_='movie-list-small')[1]
+
+    for filme in filmes:
+        caracteristicas = {}
+
+        artigo = filme.find('article')
+        if artigo == -1:
+            continue 
+
+        caracteristicas['titulo'] = artigo.find(class_='card-title').get_text().strip()
+
+        data = artigo.find(class_='tags-box')
+        if data == -1:
+            data = None
+
+        caracteristicas['data'] = data.get_text().strip()
+
+        img = artigo.find('img')
+        caracteristicas['img'] = img['src'].strip()
+
+        filmes_em_breve.append(caracteristicas.copy())
+
+    return filmes_em_breve
