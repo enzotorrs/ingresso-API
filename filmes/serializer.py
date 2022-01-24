@@ -12,3 +12,9 @@ class NoticiaSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Noticia
         fields = '__all__'
+
+
+class FilmeBreveSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.FilmeBreve
+        fields = '__all__'

@@ -22,6 +22,12 @@ class FilmePrincipalViewSet(viewsets.ModelViewSet):
     queryset = models.Filme.objects.filter(principal=True)
     serializer_class = serializer.FilmeSerializer
 
+
 class NoticiaViewSet(viewsets.ModelViewSet):
     queryset = models.Noticia.objects.all()
     serializer_class = serializer.NoticiaSerializer
+
+
+class FilmeBreveViewSet(viewsets.ModelViewSet):
+    queryset = models.FilmeBreve.objects.all()
+    serializer_class = serializer.FilmeBreveSerializer
