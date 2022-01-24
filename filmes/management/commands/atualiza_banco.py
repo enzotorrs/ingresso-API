@@ -54,8 +54,19 @@ class Command(BaseCommand):
             )
             nova_noticia.save()
         self.stdout.write('noticias atualizadas')
+    
+    def atualiza_filmes_breve(self):
+        filmes_breve = scraping.filmes_breve()
 
-
+        for filme in filmes_breve:
+            novo_filme = models.FilmeBreve(
+                titulo=filme['titulo'],
+                data_lancamento=filme['data'],
+                imagem_font=filme['img'],
+            )
+            novo_filme.save()
+            
     def handle(self, *args, **kwargs):
         self.atualiza_filmes()
         self.atualiza_noticias()
+        self.atualiza_filmes_breve()

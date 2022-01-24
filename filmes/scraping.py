@@ -132,7 +132,7 @@ async def get_filmes_em_breve():
 
     return page_content
 
-def filme_breve() -> list:
+def filmes_breve() -> list:
     filmes_em_breve = []
 
     page = asyncio.run(get_filmes_em_breve())
@@ -150,10 +150,11 @@ def filme_breve() -> list:
         caracteristicas['titulo'] = artigo.find(class_='card-title').get_text().strip()
 
         data = artigo.find(class_='tags-box')
-        if data == -1:
+        data = data.get_text().strip()
+        if data == '':
             data = None
 
-        caracteristicas['data'] = data.get_text().strip()
+        caracteristicas['data'] = data
 
         img = artigo.find('img')
         caracteristicas['img'] = img['src'].strip()
