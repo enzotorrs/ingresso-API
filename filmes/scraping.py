@@ -196,3 +196,4 @@ def fanshop() -> list:
         imagems_produtos.append(img['src'])
 
     return imagems_produtos 
+print(noticias())
