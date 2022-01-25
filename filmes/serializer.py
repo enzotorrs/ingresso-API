@@ -18,3 +18,8 @@ class FilmeBreveSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.FilmeBreve
         fields = '__all__'
+
+class FanShopSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.FanShop
+        fields = '__all__'

@@ -11,6 +11,8 @@ router.register('filmes/alta', views.FilmeAltaViewSet, basename='FilmesAlta')
 router.register('filmes/cartaz', views.FilmeCartazViewSet, basename='FilmesCartaz')
 router.register('filmes', views.FilmeViewSet, basename='Filmes')
 router.register('noticias', views.NoticiaViewSet, basename='Noticias')
+router.register('fanshop', views.FanShopViewSet, basename='Fanshop')
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),

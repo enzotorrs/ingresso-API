@@ -19,3 +19,6 @@ class FilmeBreve(models.Model):
     titulo = models.CharField(max_length=255)
     imagem_font = models.TextField()
     data_lancamento = models.CharField(max_length=20, null=True, blank=True, default=None)
+
+class FanShop(models.Model):
+    imagem_font = models.TextField()
