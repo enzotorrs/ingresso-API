@@ -58,6 +58,8 @@ class Command(BaseCommand):
     def atualiza_filmes_breve(self):
         filmes_breve = scraping.filmes_breve()
 
+        models.FilmeBreve.objects.all().delete()
+
         for filme in filmes_breve:
             novo_filme = models.FilmeBreve(
                 titulo=filme['titulo'],
@@ -66,7 +68,19 @@ class Command(BaseCommand):
             )
             novo_filme.save()
             
+    def atualiza_fanshop(self):
+        fan_shop = scraping.fanshop()
+
+        models.FanShop.objects.all().delete()
+
+        for imagem in fan_shop:
+            nova_imagem = models.FanShop(
+            imagem_font=imagem,
+            )
+            nova_imagem.save()
+
     def handle(self, *args, **kwargs):
         self.atualiza_filmes()
         self.atualiza_noticias()
         self.atualiza_filmes_breve()
+        self.atualiza_fanshop()
