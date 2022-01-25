@@ -7,6 +7,13 @@ class Filme(models.Model):
     em_cartaz = models.BooleanField(default=False)
     principal = models.BooleanField(default=False)
     principal_imagem_font = models.TextField(null=True)
+    categorias = models.CharField(max_length=255, null=True)
+    diretor = models.CharField(max_length=255, null=True)
+    descricao = models.TextField(null=True)
+    produtora = models.CharField(max_length=255, null=True)
+    atores = models.CharField(max_length=255, null=True)
+    pais = models.CharField(max_length=255, null=True)
+
 
 
 class Noticia(models.Model):

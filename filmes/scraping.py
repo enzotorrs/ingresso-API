@@ -50,6 +50,16 @@ async def get_filmes():
 
     return page_content
 
+def extrai_categorias(filmes) -> str:
+    atributos = filmes.find(attrs={'onmousedown': True})
+    html = atributos['onmousedown']
+
+    if 'trackProductClick' and 'category' in html:
+        html = html.split('\n')
+        html = html[4].split(':')
+        html = html[1].replace("'", "").replace(',', '').strip()
+        return html
+
 def filmes() -> list:
     todos_filmes = []
 
@@ -60,8 +70,18 @@ def filmes() -> list:
 
     for filme in filmes:
         caracteristicas = {}
+        caracteristicas['categorias'] = extrai_categorias(filme)
+        propriedades = filme.find_all(attrs={'itemprop': True})
 
-        caracteristicas['titulo'] = filme.get_text().strip()
+        for propriedade in propriedades:
+            if propriedade['itemprop'] == 'image':
+                continue
+
+            try:
+                caracteristicas[propriedade['itemprop']] = propriedade['content'].strip()
+
+            except KeyError:
+                caracteristicas[propriedade['itemprop']] = propriedade.get_text().strip()
 
         img = filme.find('img')
         caracteristicas['img'] =  img['src'].strip()

@@ -14,11 +14,14 @@ class Command(BaseCommand):
         models.Filme.objects.all().delete()
 
         for filme in filmes:
-            titulo = filme['titulo']
+            titulo = filme['name']
             imagem = filme['img']
-
-            if '\n' in titulo:
-                continue
+            atores = filme['actors']
+            descricao = filme['description']
+            produtora = filme['productionCompany']
+            pais = filme['countryOfOrigin']
+            diretor = filme['director']
+            categorias = filme['categorias']
 
             if titulo == filme_principal['titulo']:
                 imagem_principal = filme_principal['img']
@@ -35,6 +38,12 @@ class Command(BaseCommand):
                 em_cartaz=titulo in filmes_em_cartaz,
                 principal=principal,
                 principal_imagem_font= imagem_principal,
+                atores=atores,
+                descricao=descricao,
+                produtora=produtora,
+                pais=pais,
+                diretor=diretor,
+                categorias=categorias,
             )
             novo_filme.save()
 
