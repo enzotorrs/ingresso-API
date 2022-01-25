@@ -162,3 +162,17 @@ def filmes_breve() -> list:
         filmes_em_breve.append(caracteristicas.copy())
 
     return filmes_em_breve
+
+def fanshop() -> list:
+    imagems_produtos = []
+
+    page = requests.get('https://www.ingresso.com/home?city=sao-paulo&partnership=home')
+    soup = BeautifulSoup(page.content, 'html.parser')
+    
+    carrosel_produtos = soup.find(attrs={'data-ride':'swiper-ingresso-list-products'})
+    produtos = carrosel_produtos.find_all(class_="swiper-slide")
+    for produto in produtos:
+        img = produto.find('img')
+        imagems_produtos.append(img['src'])
+
+    return imagems_produtos 

@@ -56,3 +56,4 @@ __pycache__*
 *.pyc
 text
 *.sqlite3
+*.sqlite3
