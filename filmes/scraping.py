@@ -196,4 +196,34 @@ def fanshop() -> list:
         imagems_produtos.append(img['src'])
 
     return imagems_produtos 
-print(noticias())
+
+def cinemas() -> dict:
+    dados = dict()
+    cinemas = list()
+    cinema = dict()
+
+    page = requests.get('https://www.ingresso.com/cinemas?city=sao-paulo&partnership=home')
+    soup = BeautifulSoup(page.content, 'html.parser')
+
+    lista_de_bairros = soup.find(class_='o-hidden')
+    bairros = lista_de_bairros.find_all(class_='hide-favorite')
+
+    for bairro in bairros:
+        nome_do_bairro = bairro.find('span').get_text().strip()
+        cinemas_soup = bairro.find_all(class_='card-theater')
+
+        for cinema_soup in cinemas_soup:
+            propriedades = cinema_soup.find_all(attrs={'itemprop': True})
+            for propriedade in propriedades:
+                if propriedade['itemprop'] == 'address':
+                    cinema['endereco'] = propriedade['content']
+
+                elif propriedade['itemprop'] == 'name':
+                    cinema['nome'] = propriedade.get_text().strip()
+
+            cinemas.append(cinema.copy())
+
+        dados[nome_do_bairro] = cinemas.copy()
+        cinemas.clear()
+
+    return dados

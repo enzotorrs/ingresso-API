@@ -23,3 +23,8 @@ class FanShopSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.FanShop
         fields = '__all__'
+
+class CinemaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Cinema
+        fields = '__all__'

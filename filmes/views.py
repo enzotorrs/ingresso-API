@@ -42,3 +42,8 @@ class FanShopViewSet(viewsets.ModelViewSet):
     queryset = models.FanShop.objects.all()
     serializer_class = serializer.FanShopSerializer
     http_method_names = ['get', 'head']
+
+class CinemaViewSet(viewsets.ModelViewSet):
+    queryset = models.Cinema.objects.all()
+    serializer_class = serializer.CinemaSerializer
+    http_method_names = ['get', 'head']

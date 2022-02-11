@@ -12,6 +12,7 @@ router.register('filmes/cartaz', views.FilmeCartazViewSet, basename='FilmesCarta
 router.register('filmes', views.FilmeViewSet, basename='Filmes')
 router.register('noticias', views.NoticiaViewSet, basename='Noticias')
 router.register('fanshop', views.FanShopViewSet, basename='Fanshop')
+router.register('cinemas', views.CinemaViewSet, basename='Cinema')
 
 
 urlpatterns = [

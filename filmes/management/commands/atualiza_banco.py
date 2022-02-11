@@ -88,8 +88,23 @@ class Command(BaseCommand):
             )
             nova_imagem.save()
 
+    def atualiza_cinemas(self):
+        dados_cinemas = scraping.cinemas()
+
+        models.Cinema.objects.all().delete()
+
+        for bairro in dados_cinemas.keys():
+            for cinema in dados_cinemas[bairro]:
+                novo_cinema = models.Cinema(
+                    bairro=bairro,
+                    nome=cinema['nome'],
+                    endereco=cinema['endereco'],
+                )
+                novo_cinema.save()
+
     def handle(self, *args, **kwargs):
         self.atualiza_filmes()
         self.atualiza_noticias()
         self.atualiza_filmes_breve()
         self.atualiza_fanshop()
+        self.atualiza_cinemas()

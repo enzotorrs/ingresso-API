@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Filme(models.Model):
     nome_filme = models.CharField(max_length=255)
     imagem_font = models.TextField()
@@ -27,5 +28,12 @@ class FilmeBreve(models.Model):
     imagem_font = models.TextField()
     data_lancamento = models.CharField(max_length=20, null=True, blank=True, default=None)
 
+
 class FanShop(models.Model):
     imagem_font = models.TextField()
+
+
+class Cinema(models.Model):
+    bairro = models.CharField(max_length=255)
+    nome = models.CharField(max_length=255)
+    endereco = models.CharField(max_length=255)
