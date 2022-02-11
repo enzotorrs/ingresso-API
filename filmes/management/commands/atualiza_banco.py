@@ -45,9 +45,10 @@ class Command(BaseCommand):
                 diretor=diretor,
                 categorias=categorias,
             )
+            self.stdout.write('filme "%s" adicionado ao banco' % titulo)
             novo_filme.save()
 
-        self.stdout.write('banco atualizado')
+        self.stdout.write(self.style.SUCCESS('filmes atualizados com sucesso'))
 
 
     def atualiza_noticias(self):
@@ -62,7 +63,8 @@ class Command(BaseCommand):
                 imagem=noticia['img'],
             )
             nova_noticia.save()
-        self.stdout.write('noticias atualizadas')
+            self.stdout.write('noticia "%s" adicionada ao banco' % noticia['titulo'])
+        self.stdout.write(self.style.SUCCESS('noticias atualizadas'))
     
     def atualiza_filmes_breve(self):
         filmes_breve = scraping.filmes_breve()
@@ -100,7 +102,9 @@ class Command(BaseCommand):
                     nome=cinema['nome'],
                     endereco=cinema['endereco'],
                 )
+                self.stdout.write('cinema "%s" adicionado ao banco' % cinema['nome'])
                 novo_cinema.save()
+        self.stdout.write(self.style.SUCCESS('cinemas atualizados com sucesso'))
 
     def handle(self, *args, **kwargs):
         self.atualiza_filmes()
