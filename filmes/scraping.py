@@ -143,11 +143,12 @@ async def get_filmes_em_breve():
     page = await browser.newPage()
     await page.goto('https://www.ingresso.com/filmes?city=sao-paulo&partnership=home', {'waitUntil' : 'networkidle2'})
 
-    await page.click('[id="tab-coming-soon"]')
-    await page.waitForSelector('#coming-soon .movie-list-small li:nth-child(50)')
+    botao_breve = await page.querySelector('#tab-coming-soon')
+
+    await page.evaluate('(botao_breve) => botao_breve.click()', botao_breve)
+    await page.waitForSelector('#coming-soon .movie-list-small li:nth-child(20)')
     
     page_content = await page.content() 
-
     await browser.close()
 
     return page_content
