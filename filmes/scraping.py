@@ -15,7 +15,10 @@ def filmes_em_alta() -> list:
     filmes = carrosel.find_all('article')
 
     for filme in filmes:
-        filmes_em_alta.append(filme.get_text().strip())
+        titulo_filme_html = filme.find(attrs={'itemprop': 'name'})
+        titulo_filme = titulo_filme_html.get_text().strip()
+
+        filmes_em_alta.append(titulo_filme)
 
     return filmes_em_alta
 
@@ -29,7 +32,12 @@ def filmes_em_cartaz() -> list:
     filmes = carrosel.find_all('article')
 
     for filme in filmes:
-        filmes_em_cartaz.append(filme.get_text().strip())
+        titulo_filme_html = filme.find(attrs={'itemprop': 'name'})
+        if titulo_filme_html is None:
+            continue
+        titulo_filme = titulo_filme_html.get_text().strip()
+
+        filmes_em_cartaz.append(titulo_filme)
 
     return filmes_em_cartaz
 
@@ -228,3 +236,8 @@ def cinemas() -> dict:
         cinemas.clear()
 
     return dados
+if __name__ == '__main__':
+    for filme in filmes_em_alta():
+        print(filme)
+    for filme in filmes_em_cartaz():
+        print(filme)
